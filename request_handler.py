@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from animals import get_all_animals
+
+from animals import get_all_animals, get_single_animal, delete_animal
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -10,6 +11,29 @@ class HandleRequests(BaseHTTPRequestHandler):
     # It gives a description of the class or function
     """Controls the functionality of any GET, PUT, POST, DELETE requests to the server
     """
+
+    def parse_url(self, path):
+        """docstring"""
+        # Just like splitting a string in JavaScript. If the
+        # path is "/animals/1", the resulting list will
+        # have "" at index 0, "animals" at index 1, and "1"
+        # at index 2.
+        path_params = path.split("/")
+        resource = path_params[1]
+        id = None
+
+        # Try to get the item at index 2
+        try:
+            # Convert the string "1" to the integer 1
+            # This is the new parseInt()
+            id = int(path_params[2])
+        except IndexError:
+            pass  # No route parameter exists: /animals
+        except ValueError:
+            pass  # Request had trailing slash: /animals/
+
+        return (resource, id)  # This is a tuple
+
 
     # Here's a class function
     def _set_headers(self, status):
@@ -42,15 +66,20 @@ class HandleRequests(BaseHTTPRequestHandler):
         """
         # Set the response code to 'Ok'
         self._set_headers(200)
+        response = {}  # Default response
 
-        # Your new console.log() that outputs to the terminal
-        print(self.path)
+        # Parse the URL and capture the tuple that is returned
+        (resource, id) = self.parse_url(self.path)
 
-        # It's an if..else statement
-        if self.path == "/animals":
-            response = get_all_animals()
-        else:
-            response = []
+        if resource == "animals":
+            if id is not None:
+                response = f"{get_single_animal(id)}"
+
+            else:
+                response = f"{get_all_animals()}"
+
+        self.wfile.write(response.encode())
+
 
 
         # This weird code sends a response back to the client
@@ -76,6 +105,22 @@ class HandleRequests(BaseHTTPRequestHandler):
         """Handles PUT requests to the server
         """
         self.do_POST()
+
+    def do_DELETE(self):
+        """docstring"""
+        # Set a 204 response code
+        self._set_headers(204)
+
+        # Parse the URL
+        (resource, id) = self.parse_url(self.path)
+
+        # Delete a single animal from the list
+        if resource == "animals":
+            delete_animal(id)
+
+        # Encode the new animal and send in response
+        self.wfile.write("".encode())
+
 
 
 # This function is not inside the class. It is the starting
