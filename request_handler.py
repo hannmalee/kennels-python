@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import json
 
-from animals import get_all_animals, get_single_animal, delete_animal
+from animals import get_all_animals, get_single_animal, delete_animal, update_animal
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -102,9 +103,22 @@ class HandleRequests(BaseHTTPRequestHandler):
     # It handles any PUT request.
 
     def do_PUT(self):
-        """Handles PUT requests to the server
-        """
-        self.do_POST()
+        """handles the PUT requests"""
+        self._set_headers(204)
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = self.rfile.read(content_len)
+        post_body = json.loads(post_body)
+
+        # Parse the URL
+        (resource, id) = self.parse_url(self.path)
+
+        # Delete a single animal from the list
+        if resource == "animals":
+            update_animal(id, post_body)
+
+        # Encode the new animal and send in response
+        self.wfile.write("".encode())
+
 
     def do_DELETE(self):
         """docstring"""
@@ -120,7 +134,6 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
-
 
 
 # This function is not inside the class. It is the starting
