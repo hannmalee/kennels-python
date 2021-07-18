@@ -50,7 +50,7 @@ def get_single_animal(id):
 def create_animal(animal):
     """creates animal"""
     # Get the id value of the last animal in the list
-    max_id = ANIMALS[-1]["id"]
+    max_id = ANIMALS[-1]["id"] #in ANIMALS, we are looking up the last dictionary, we are then getting the "id" key value
 
     # Add 1 to whatever that number is
     new_id = max_id + 1
