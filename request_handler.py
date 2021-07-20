@@ -88,17 +88,19 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     # Here's a method on the class that overrides the parent's method.
     # It handles any POST request.
-    def do_POST(self):
+    def do_POST(self): #function
         """handles the POST function"""
-        self._set_headers(201)
-        content_len = int(self.headers.get('content-length', 0))
-        post_body = self.rfile.read(content_len)
+        self._set_headers(201) #93-96 taking what you get from postman and turning it into a python dictionary
+        content_len = int(self.headers.get('content-length', 0)) #content_len is the length of the dictionary; 
+        #total length of characters
+
+        post_body = self.rfile.read(content_len) #reading the content length (bytes)
 
         # Convert JSON string to a Python dictionary
         post_body = json.loads(post_body)
 
         # Parse the URL
-        (resource, id) = self.parse_url(self.path)
+        (resource, _) = self.parse_url(self.path) #creating tuple, resource is animals; 
 
         # Initialize new animal
         new_animal = None
@@ -110,7 +112,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_animal = create_animal(post_body)
 
         # Encode the new animal and send in response
-        self.wfile.write(f"{new_animal}".encode())
+        # self.wfile.write(f"{new_animal}".encode())
 
 
     # Here's a method on the class that overrides the parent's method.
