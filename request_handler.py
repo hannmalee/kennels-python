@@ -3,6 +3,9 @@ import json
 
 from animals import get_all_animals, get_single_animal, create_animal, delete_animal, update_animal
 
+
+from locations import get_single_location, get_all_locations
+
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
 # work together for a common purpose. In this case, that
@@ -78,6 +81,14 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             else:
                 response = f"{get_all_animals()}"
+
+        if resource == "locations":
+            if id is not None:
+                response = f"{get_single_location(id)}"
+
+            else:
+                response = f"{get_all_locations()}"
+
 
         self.wfile.write(response.encode())
 
