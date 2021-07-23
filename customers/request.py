@@ -2,7 +2,6 @@ import sqlite3
 import json
 from models import Customer
 
-
 CUSTOMERS = [
     {
         "id": 1,
@@ -36,11 +35,11 @@ def get_all_customers():
             c.id,
             c.name,
             c.address,
-        FROM employee e
+        FROM customer c
         """)
 
         # Initialize an empty list to hold all animal representations
-        employees = []
+        customers = []
 
         # Convert rows of data into a Python list
         dataset = db_cursor.fetchall()
@@ -52,17 +51,17 @@ def get_all_customers():
             # Note that the database fields are specified in
             # exact order of the parameters defined in the
             # Animal class above.
-            employee = Employee(row['id'], row['name'], row['locationId'])
+            customer = Customer(row['id'], row['name'], row['address'])
 
-            employees.append(employee.__dict__)
+            customers.append(customer.__dict__)
 
     # Use `json` package to properly serialize list as JSON
-    return json.dumps(employees)
+    return json.dumps(customers)
 
 
 # Function with a single parameter
-def get_single_employee(id):
-    """handles GET request for single employee"""
+def get_single_customer(id):
+    """handles GET request for single customer"""
     with sqlite3.connect("./kennel.db") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
@@ -71,18 +70,18 @@ def get_single_employee(id):
         # into the SQL statement.
         db_cursor.execute("""
         SELECT
-            e.id,
-            e.name,
-            e.locationId,
-        FROM employee e
-        WHERE e.id = ? 
+            c.id,
+            c.name,
+            c.customer,
+        FROM customer c
+        WHERE c.id = ? 
         """, ( id, )) # ? on line 97 correlates to the first position of the tuple on line 98
 
         # Load the single result into memory
         data = db_cursor.fetchone()
 
         # Create an animal instance from the current row
-        employee = Employee(data['id'], data['name'], data['locationId']
+        customer = Customer(data['id'], data['name'], data['address']
         )
 
-        return json.dumps(employee.__dict__)
+        return json.dumps(customer.__dict__)
