@@ -10,7 +10,8 @@ from locations import get_single_location, get_all_locations, create_location
 from employees import get_single_employee, get_all_employees
 
 
-from customers import get_single_customer, get_all_customers
+from customers import get_single_customer, get_all_customers, create_customer
+
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -134,7 +135,10 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Initialize new animal
         new_animal = None
+
         new_location = None
+
+        new_customer = None
 
         # Add a new animal to the list. Don't worry about
         # the orange squiggle, you'll define the create_animal
@@ -144,6 +148,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         
         if resource == "locations":
             new_location = create_location(post_body)
+
+        if resource == "customers":
+            new_customer = create_customer(post_body)
 
         # Encode the new animal and send in response
         # self.wfile.write(f"{new_animal}".encode())
