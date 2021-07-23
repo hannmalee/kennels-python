@@ -7,7 +7,7 @@ from animals import get_all_animals, get_single_animal, create_animal, delete_an
 from locations import get_single_location, get_all_locations, create_location
 
 
-from employees import get_single_employee, get_all_employees
+from employees import get_single_employee, get_all_employees, create_employee
 
 
 from customers import get_single_customer, get_all_customers, create_customer
@@ -135,11 +135,10 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Initialize new animal
         new_animal = None
-
         new_location = None
-
+        new_employee = None
         new_customer = None
-
+        
         # Add a new animal to the list. Don't worry about
         # the orange squiggle, you'll define the create_animal
         # function next.
@@ -148,6 +147,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         
         if resource == "locations":
             new_location = create_location(post_body)
+
+        if resource == "employees":
+            new_employee = create_employee(post_body)
 
         if resource == "customers":
             new_customer = create_customer(post_body)

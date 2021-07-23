@@ -91,3 +91,21 @@ def get_single_employee(id):
         )
 
         return json.dumps(employee.__dict__)
+
+
+def create_employee(employee):
+    """creates animal"""
+    # Get the id value of the last animal in the list
+    max_id = EMPLOYEES[-1]["id"] #in ANIMALS, we are looking up the last dictionary, we are then getting the "id" key value
+
+    # Add 1 to whatever that number is
+    new_id = max_id + 1
+
+    # Add an `id` property to the animal dictionary
+    employee["id"] = new_id
+
+    # Add the animal dictionary to the list
+    EMPLOYEES.append(employee)
+
+    # Return the dictionary with `id` property added
+    return employee
