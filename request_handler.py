@@ -4,13 +4,14 @@ import json
 from animals import get_all_animals, get_single_animal, create_animal, delete_animal, update_animal
 
 
-from locations import get_single_location, get_all_locations, create_location, delete_location
+from locations import get_single_location, get_all_locations, create_location, delete_location, update_location
 
 
-from employees import get_single_employee, get_all_employees, create_employee, delete_employee
+from employees import get_single_employee, get_all_employees, create_employee, delete_employee, update_employee
 
 
-from customers import get_single_customer, get_all_customers, create_customer, delete_customer
+from customers import get_single_customer, get_all_customers, create_customer, delete_customer, update_customer
+
 
 
 # Here's a class. It inherits from another class.
@@ -174,6 +175,12 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Delete a single animal from the list
         if resource == "animals":
             update_animal(id, post_body)
+        if resource == "customers":
+            update_customer(id, post_body)
+        if resource == "employees":
+            update_employee(id, post_body)
+        if resource == "location":
+            update_location(id, post_body)
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
