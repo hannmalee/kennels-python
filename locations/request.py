@@ -82,3 +82,21 @@ def get_single_location(id):
         )
 
         return json.dumps(location.__dict__)
+
+
+def create_location(location):
+    """creates location"""
+    # Get the id value of the last animal in the list
+    max_id = LOCATIONS[-1]["id"] #in ANIMALS, we are looking up the last dictionary, we are then getting the "id" key value
+
+    # Add 1 to whatever that number is
+    new_id = max_id + 1
+
+    # Add an `id` property to the animal dictionary
+    location["id"] = new_id
+
+    # Add the animal dictionary to the list
+    LOCATIONS.append(location)
+
+    # Return the dictionary with `id` property added
+    return location
