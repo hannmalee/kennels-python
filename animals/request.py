@@ -94,8 +94,8 @@ def get_single_animal(id):
             a.location_id,
             a.customer_id
         FROM animal a
-        WHERE a.id = ?
-        """, ( id, ))
+        WHERE a.id = ? 
+        """, ( id, )) # ? on line 97 correlates to the first position of the tuple on line 98
 
         # Load the single result into memory
         data = db_cursor.fetchone()
