@@ -94,7 +94,7 @@ def get_single_employee(id):
 
 
 def create_employee(employee):
-    """creates animal"""
+    """creates employee"""
     # Get the id value of the last animal in the list
     max_id = EMPLOYEES[-1]["id"] #in ANIMALS, we are looking up the last dictionary, we are then getting the "id" key value
 

@@ -6,16 +6,22 @@ CUSTOMERS = [
     {
         "id": 1,
         "name": "Hannah Hall",
-        "address": "7002 Chestnut Ct"
+        "address": "7002 Chestnut Ct",
+        "email": "hannah@hannah.com",
+        "password": "hannah"
     },
     {
         "id": 2,
         "name": "David Palomeque",
-        "address": "1010 Main St"
+        "address": "1010 Main St",
+        "email":"david@david.com",
+        "password": "david"
     },{
         "id": 3,
         "name": "Loren Meens",
-        "address": "2020 Apple Rd"
+        "address": "2020 Apple Rd",
+        "email": "loren@loren.com",
+        "password": "loren"
     }
 ]
 
